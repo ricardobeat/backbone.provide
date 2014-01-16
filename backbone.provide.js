@@ -11,13 +11,13 @@
 //     })
 //
 
-Backbone.Events.prototype.request = function (id, callback) {
+Backbone.Events.prototype.request = function (id, callback, context) {
     this.once(id, callback)
     Backbone.trigger('request-' + id, context)
 }
 
 Backbone.Events.prototype.provide = function (id, getData) {
     this.listenTo(Backbone, 'request-' + id, function(context){
-        (context || Backbone).trigger(id, getData.call(ctx))
+        (context || Backbone).trigger(id, getData.call(this))
     })
 }
